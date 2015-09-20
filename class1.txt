@@ -33,10 +33,18 @@ files: syllabus.pdf, Lecture 1A.pdf, Lecture 1B.pdf, Lecture 1C.pdf
     => folder: layout of files
     => structure: layout of classes
     => then: search, errors, debugger icons
+- click on any line number to add a break point
+    => click & drag it off to remove it completely
+    => Variables View (left panel) in the Debug Area shows you all variables at a particular breakpoint
 
 
 4. Swift
 - no semi-colons syntax
+- var name:type is the variable & argument syntax:
+    var x:float = 4.7
+    var s:String = "4.7"
+    let ret:String = String(format: "%.2f", x)
+- all variables must be initialized at declaration time
 - keyword 'func' indicates that it's a function:
     func adder(first: Int, second: Int) {
         var result = first + second
@@ -49,12 +57,59 @@ files: syllabus.pdf, Lecture 1A.pdf, Lecture 1B.pdf, Lecture 1C.pdf
     => if you want a label for the first argument:
             func adder2(FN first: Int, second: Int) { ... }
             adder2(FN: 5, second: 9)
+- to return a value: use -> Type
+- cast from String to double:
+    => var doubleVal = NSString(string: str).doubleValue
+    => var doubleVal = (str as String).doubleValue
+- let vs var:
+    => var means it can change
+    => let means it cannot change
+- switch statement:
+    => no need for 'break', Swift knows when it reaches next case to jump out
+    => supports range via triple dots '...':
+        case 1...25:
+        case 26...50:
 
 
+5. Arrays & Dictionaries
+- array: [Int] or NSArray
+    => var arr:[Int] = [7, 2, 9, 1]
+    => var cities:NSArray = ["New York", "Boston", "Chicago"]
+    => get an item out of the array as another data type:
+        let firstCity = cities[0] as! String
+- dictionary: [Int: String] or NSDictionary
+    => var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+    => var list:NSDictionary = ["John":12, "Mary":13, "Bill":15, "Jim":19]
+    => key:value syntax per item
+    => for ( name, age ) in list {
+           print("Name: ", name, ", age: ",age)
+       }
+    => dictionaries are not ordered
 
 
+6. Classes
+- power of Swing & Objective-C comes from classes
+- classes = data structure like, but have additional functions in them
+- classes have inheritance, polymorphism, abstraction, encapsulation
+- they must have a constructor
+- example:
+    class Player {
+        var name: String
+        var age: Int
+        var score: Int
+        
+        init(n:String, a:Int, s:Int) {
+            name = n
+            age = a
+            score = s
+        }
+        
+        func printData() {
+            print("name: ", name)
+            print("age: ", age)
+            print("score: ", score)
+        }
+    }
 
-
-
-7. Tips
-- 
+    var p1:Player = Player(n: "Kevin", a: 23, s: 45)
+    p1.printData()

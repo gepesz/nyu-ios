@@ -1,6 +1,6 @@
 CLASS #1
 
-files: 
+files: syllabus.pdf, Lecture 1A.pdf, Lecture 1B.pdf, Lecture 1C.pdf
 
 1. Course overview
 - all materials will be posted up on NYU Home, under the Resources folder
@@ -9,12 +9,46 @@ files:
 - homeworks:
     => optional but highly recommended
     => will be solved in the next class
-- there will be a final project
-- class participation is part of the final grade
+- there will be a final project (80%)
+- class participation is part of the final grade (10%)
+- attendance as well (10%)
 
 
-2. 
-- 
+2. Programming
+- program = code + data
+- iOS is done in Objective-C (invented in 1983) or in Swift (invented in 2014)
+- Objective-C & Swift have the same runtime performance
+- you can mix these 2 languages inside an app
+- Apple recommends to write new stuff in Swift
+- likely 2-3 years down the road they will stop releasing new things in Objective-C, only in Swift
+
+
+3. Xcode
+- Products/NAME.app is the executable binary:
+    => you can see the full path of it on the right properties panel
+- Circles icon: see both header & content at the same time
+    => opens the Assistant Editor
+    => View => Assistant Editor: you can configure whether to put it to the right or the bottom
+- icons:
+    => folder: layout of files
+    => structure: layout of classes
+    => then: search, errors, debugger icons
+
+
+4. Swift
+- no semi-colons syntax
+- keyword 'func' indicates that it's a function:
+    func adder(first: Int, second: Int) {
+        var result = first + second
+        print(String(result))
+    }
+
+    adder(4, second: 5)
+    => first argument:       NO LABEL
+    => additional arguments: NEED LABELS
+    => if you want a label for the first argument:
+            func adder2(FN first: Int, second: Int) { ... }
+            adder2(FN: 5, second: 9)
 
 
 

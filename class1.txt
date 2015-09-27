@@ -77,6 +77,9 @@ files: syllabus.pdf, Lecture 1A.pdf, Lecture 1B.pdf, Lecture 1C.pdf
     => var cities:NSArray = ["New York", "Boston", "Chicago"]
     => get an item out of the array as another data type:
         let firstCity = cities[0] as! String
+- reason we need as! casting:
+    => arrays can contain different data types: let arr = [5, "Hello"]
+    => this tells the compiler how to get the data out
 - dictionary: [Int: String] or NSDictionary
     => var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
     => var list:NSDictionary = ["John":12, "Mary":13, "Bill":15, "Jim":19]
@@ -90,6 +93,7 @@ files: syllabus.pdf, Lecture 1A.pdf, Lecture 1B.pdf, Lecture 1C.pdf
 6. Classes
 - power of Swing & Objective-C comes from classes
 - classes = data structure like, but have additional functions in them
+- classes = mathematical representation of a (physical) object
 - classes have inheritance, polymorphism, abstraction, encapsulation
 - they must have a constructor
 - example:

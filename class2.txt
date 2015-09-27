@@ -1,0 +1,158 @@
+CLASS #2
+
+files: 
+
+1. Topics
+- tuples: combining different data types into one entity
+- embedded functions: functions inserted in other functions
+    => for privacy
+    => for hiding things
+- function parameters
+    => used for asynch requests mostly: callback functions
+- enums: better code readability
+- protocols: these are the interfaces in Swift
+- extensions: add new functionality to classes (whose code we might not own)
+    => eg: add .foo() to Swift's String
+
+
+2. Class
+- class that derives from another class:
+    => class DerivedClass: BaseClass { ... }
+    => DerivedClass will have all properties & methods of BaseClass
+- override func myFunc():
+    => this is how the derived overrides a previously defined function
+    => you replace or overwrite the previous version
+- usually we call the base class method first, then do some more:
+    => override func myFunc() {
+        super myFunc()  // call base class...
+        
+        token = 5       // ... then do some more
+    }
+- you can make a class variable optional by adding '?' to it:
+    => var clubName: String?
+    => var x:ProfessionalPlayer = ProfessionalPlayer(n2: "Bob", a2: 30, s2: 291, c2: "Venus")
+- empty constructor = default init(): has no parameters
+    => init() {
+        self.countryOfBirth = "USA"     // sometimes you need to put this before super.init() due to xcode glitches
+        super.init(n2: "John", a2: 23, s2: 209, c2: "Saturn")
+    }
+    => now you can create a var without params: var p:WorldPlayer = WorldPlayer()
+
+
+3. Tuples
+- introduced in Swift, not in Objective-C
+- uses the () syntax:
+    => (label: type, label: type, ...)
+    => can have unlimited label:type pairs in it
+- example:
+    func computeStats(data: [Int]) -> (product: Int, sum: Int) {
+        var p: Int = 1
+        var s: Int = 0
+        for x in data {
+            s += x
+            p *= x
+        }
+        return (p, s)   // alternatively: return(product: p, sum: s)
+    }
+    let tuple = computeStats([1, 2, 3, 4, 5])
+    let product = tuple.product     // how you read value out of it
+- advantage is that it doesn't require an object or class
+    => esp handy when you need to quickly add another thing
+    => very nice, elegant
+- variable number of inputs to a function: use '...' notation again
+    => func computeWithVarNofInputs(data: Int...) -> Int {
+        var s: Int = 0
+        for x in data {
+            s += x
+        }
+        return s
+    }
+    print(computeWithVarNofInputs(4).description)
+    print(computeWithVarNofInputs(1, 2, 3, 4).description)
+
+
+4. Embedded functions
+- function inside a function:
+    => func a() {
+        func b() {
+            func c() { ... }
+            ...
+        }
+        ...
+    }
+
+
+5. Function parameters
+- syntax: funcName: Int -> Bool:
+    => fund myFunc(a: Int, condition: Int -> Bool) {
+
+    }
+- the 'condition' argument is a function of type Int to Bool:
+    func doesValueSatisfyTheGivenCondition(value: Int, condition: Int -> Bool) -> Bool {
+        let ret: Bool = condition(value)
+        return ret
+    }
+
+
+6. Enums
+- enums = named values that are more meaningful than magic numbers
+- syntax: 
+    => enum shoppingObjects {
+        case Butter, Bread, Milk, Eggs
+    }
+    func testEnums(item: shoppingObjects) { // can use them as variable types
+        print("Need to buy: ", item)
+    }
+    testEnums(shoppingObjects.Bread)
+- enums in the local scope use the .Enum notation:
+    enum operationToDo {
+        case Add, Subtract, Multiply, Divide
+    }
+    func executeThis(number1: Int, number2: Int, operation: operationToDo) -> Int {
+        var ret: Int = 0
+        switch operation {
+        case .Add:
+            ret = number1 + number2
+        case .Divide:
+            ret = number1 / number2
+        case .Subtract:
+            ret = number1 - number2
+        case .Multiply:
+            ret = number1 * number2
+        }
+        return ret
+    }
+
+
+7. Protocols
+- protocols = interfaces, behaviors, what is expected from the class to do
+- syntax:
+    => protocol mathComputation {
+        func doAdd(number1: Double, number2: Double) -> Double
+    }
+- any class conforming to this protocol now has to implement the doAdd() method
+- we usually implement Apple's existing protocols, not create new ones
+- rarely we need to create our own protocols
+
+
+8. Extensions
+- extensions = add new methods to classes (that we might not own)
+- syntax:
+    extension String {  // <== MUST BE PUT at File level - cannot be put inside a Class
+        func whoAreYou() -> String {
+            return "I am a String"
+        }
+        func foo() {
+            print("This is from foo()")
+        }
+    }
+    let x: String = "Test"
+    print(x.whoAreYou())
+    x.foo()
+
+
+9. Tips
+- use breakpoints & debugger instead of printing to console to see values inside an object
+    => add breakpoint right after creating/modifying an object, then inspect it
+- rearrange files by drag & drop in the Navigator in any order you like them
+- use object.description to print (Stringify) objects nicely

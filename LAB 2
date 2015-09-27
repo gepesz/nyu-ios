@@ -1,0 +1,11 @@
+LAB 2:
+
+Write a Swift function that takes two arguments and returns one value. Then call it.
+
+Example:
+
+    func testAddTwoNumbers(firstNumber: Int, secondNumber: Int, performer: (Int, Int) -> Int) -> Int {
+ 
+
+    }
+

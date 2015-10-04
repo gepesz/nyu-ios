@@ -1,7 +1,5 @@
 CLASS #2
 
-files: 
-
 1. Topics
 - tuples: combining different data types into one entity
 - embedded functions: functions inserted in other functions
@@ -131,6 +129,9 @@ files:
         func doAdd(number1: Double, number2: Double) -> Double
     }
 - any class conforming to this protocol now has to implement the doAdd() method
+- the way to say that a class implements a protocol:
+    => you put the name of the protocol into a <Protocol>:
+        ViewController : UIViewController <MyProtocol>
 - we usually implement Apple's existing protocols, not create new ones
 - rarely we need to create our own protocols
 

@@ -2,7 +2,6 @@ CLASS #3
 
 1. Topics
 - Objective-C
-- 
 
 
 2. Objective-C
@@ -16,9 +15,212 @@ CLASS #3
 - it's been built bottom-up, so it has many bandages and old add-on ways
     => which is why Swift (a new language) came out
 - file types: .h & .m
-- 
+- functions are called 'selectors':
+    => addThisNumber:toThisNumber           <= Objective-C selector syntax
+    => addThisNumber(float f1, float f2)    <= C++ function syntax
+- the whole 'addThis:toThis' is called a selector
+- has classes
+- classes have properties & methods:
+    => NSArray.count: property
+    => [NSArray arrayWithObjects:...]: method
+- has protocols
+- has categories: this is extending in Swift (extend/add code to an existing class)
 
 
-9. Tips
-- 
+3. Syntax
+- all code lives between:
+    => .h files, all code must be between:
+    @interface
+    ...
+    @end
+    => .m files, all code must be between:
+    @implementation
+    ...
+    @end
+- must put ; at the end of statements:
+    int ret = 0;
+    return ret;
+- how to write functions:
+    -(void)myFunc {      <== object function
 
+    }
+    +(void)anotherFunc { <== class function
+
+    }
+    -(int)addThisNumber:(int)number1 toThisNumber:(int)number2 {
+        // this is a selector with arguments
+    }
+- calling a function uses the [functionName] syntax:
+    => int a = [self addThisNumber:30 toThisNumber: 20];
+    => NSLog(@"Answer is: %d", a);  <= c-style strings & formatting
+
+
+4. Type conversion
+- examples:
+    -(NSString*)multiplyThisNumber:(NSString*)thisString withThisNumber:(NSString*)thatString {
+        float f1 = thisString.floatValue;
+        float f2 = thatString.floatValue;
+        NSString *ret = [NSString stringWithFormat:@"%.3f", f1 * f2];
+        return ret;
+    }
+
+    float p = [self multiplyThisNumber:@"3.45" withThisNumber:@"7.0"].floatValue;
+    NSLog(@"Product is: %f", p);
+
+
+5. NSArray
+- has to have a 'nil' at the end
+- example:
+    -(void)testArray {
+        NSArray* citiesArray = [NSArray arrayWithObjects:@"New York", @"Boston", @"Chicago", nil];
+    
+        NSUInteger count = citiesArray.count;
+        NSString* firstCity = [citiesArray objectAtIndex:0];
+        NSString* secondCity = [citiesArray objectAtIndex:1];
+        NSLog(@"firstCity: %@, number of cities: %lu", firstCity, (unsigned long)count);
+    }
+- sorting an array:
+    -(NSArray*)sort:(NSArray*) input {
+        NSMutableArray* ret = [[NSMutableArray alloc] initWithArray:input];
+        NSUInteger count = ret.count;
+        
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = 0; j < count - 1; j++) {
+                NSNumber* left = [ret objectAtIndex:j];
+                NSNumber* right = [ret objectAtIndex:j+1];
+                if (right.intValue < left.intValue) {
+                    [ret replaceObjectAtIndex:j withObject:right];
+                    [ret replaceObjectAtIndex:j+1 withObject:left];
+                }
+            }
+        }
+        return ret;
+    }
+
+    NSArray* arr = [NSArray arrayWithObjects:[NSNumber numberWithInt:12],
+                                             [NSNumber numberWithInt:6],
+                                             [NSNumber numberWithInt:33],
+                                             [NSNumber numberWithInt:29],
+                                             [NSNumber numberWithInt:2],
+                                             nil];
+    NSArray* sorted = [self sort:arr];
+    for (int i = 0; i < sorted.count; i++) {
+        int data = ((NSNumber*)[sorted objectAtIndex:i]).intValue;
+        NSLog(@"%d ", data);
+    }
+
+
+6. NSMutableDictionary
+- all objects derive from NSObject
+    => NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+    => the alloc (which allocates memory) & the init (which inits the object) are derived from NSObject
+- example:
+    -(void)testDictionary {
+        NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+        [dic setValue: @"John" forKey:@"12"];
+        [dic setValue: @"Mary" forKey:@"14"];
+        [dic setValue: @"Bill" forKey:@"16"];
+        
+        for (id key in dic) {
+            NSString* item = [dic objectForKey:key];
+            NSLog(@"Key: %@ corresponds to value: %@", key, item);
+        }
+    }
+- dictionary is unordered, you usually don't loop through it
+
+
+7. Interface
+- interface in a .h = public
+- interface in a .m = private
+    => so put all private methods into the .m file's @interface section
+- usually we put properties first inside a { ... } block
+- then put the methods
+- example:
+    @interface Player : NSObject {
+        NSString* name; // visible only in class (private scope)
+        int age;
+        int score;
+    }
+
+    -(void)initWithName:(NSString*)name ageOfPlayer(int)age gameScore:(int)score;
+
+    @end
+
+    @implementation Player
+
+    -(void)initWithName:(NSString *)n ageOfPlayer:(int)a gameScore:(int)s {
+        name = n;
+        age = a;
+        score = s;
+    }
+
+    @end
+- to make a member public scope, we have to mark it as a property:
+    => @property (nonatomic, strong) NSString* universalIdentity;
+    => @property means this is a public property
+    => atomic means thread-safe
+    => nonatomic means non-thread-safe
+    => nonatomic really means this property isn't waiting or dependent on anything => just read/write it
+    => strong = value is global throughout the lifecycle of the app
+    => weak = value is only known at run/call time
+    => you can also make a property readonly (so no setting)
+
+
+8. Categories
+- categories = class extensions
+- Swift extensions came from Objective-C categories
+- Add File => Objective-C file
+    => File Type: Category
+    => Class: NSString (whatever we want to extend)
+- core difference between Objective-C category & Swift extension is that category has a name
+    => @interface NSString (StringEmailManipulations)
+
+    @end
+- and by default the file name is simply the class name we are extending + category name:
+    => NSString+StringEmailManipulations.h
+
+    @interface NSString (StringEmailManipulations)
+
+    -(NSString*)getNameFromEmail;
+    -(NSString*)getDomainFromEmail;
+
+    @end
+
+
+9. User input
+- create a different type of project: Command Line
+- then, here is how you read user input in Swift:
+    func getInput() -> String {
+        let kb:NSFileHandle = NSFileHandle.fileHandleWithStandardInput()  // kb = keyboard
+        let inputData:NSData = kb.availableData
+        let strData = NSString(data: inputData, encoding: NSUTF8StringEncoding)
+        return strData as! String
+    }
+
+    let guess:String = getInput()
+    let g:Int = (guess as NSString).integerValue
+
+
+10. Function arguments
+- SEL is a special data type in Objective-C indicating this is a function
+- syntax:
+    -(void)action1 {
+        NSLog(@"From action 1");
+    }
+
+    -(void)action2 {
+        NSLog(@"From action 2");
+    }
+
+    [self action1];
+    [self performSelector:@selector(action2)];
+- you execute the function using the one of the 'performSelector' variants on NSObject
+
+
+11. Tips
+- if you don't get colors/code completion in XCode ==> just restart it
+- generate random number: let magicNumber:Int = (Int)(arc4random() % 65)
+- xcode remembers your previous language choice & defaults dropdowns to that
+- Swift has tuples, Objective-C doesn't
+    => this is where Swift is clearly better, easier, more convenient
+    => in Objective-C you have to wrap your data into a class (with properties), or NSDictionary/NSArray

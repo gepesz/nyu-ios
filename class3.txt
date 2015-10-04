@@ -1,0 +1,24 @@
+CLASS #3
+
+1. Topics
+- Objective-C
+- 
+
+
+2. Objective-C
+- 1983
+- very old language at this point
+- ppl were getting out of C and getting into objects
+- Strustroup was coming out with C++ around the same time
+- created by Next Steps (NS)
+- Steve Jobs then licenced it back to Apple
+- it really became known around 2008 when the Cocoa library made it very popular w/ the iPhone SDK
+- it's been built bottom-up, so it has many bandages and old add-on ways
+    => which is why Swift (a new language) came out
+- file types: .h & .m
+- 
+
+
+9. Tips
+- 
+

@@ -101,7 +101,7 @@ class League {
                     } else {
                         // team two win
                         teamTwo.points += 3
-                    }
+                    }                    
                 }
             }
         }
@@ -110,8 +110,22 @@ class League {
     // sorts all teams based on results (stats) already processed
     func rankTeams() -> [Team] {
         let ranking = teams.values.sort {
-            return $0.points > $1.points ||
-                   $0.goalDifference() > $1.goalDifference()
+            var ret: Bool = false
+            if ( $0.points > $1.points ) {
+                // more points
+                ret = true
+            } else if ( $0.points == $1.points ) {
+                if ( $0.goalDifference() > $1.goalDifference() ) {
+                    // same points, but higher goal difference
+                    ret = true
+                } else if ( $0.goalDifference() > $1.goalDifference() ) {
+                    if ( $0.goalScored > $1.goalScored ) {
+                        // same points, same goal difference, but more goals scored
+                        ret = true
+                    }
+                }
+            }
+            return ret
         }
         return ranking
     }
@@ -123,7 +137,11 @@ class League {
     //  - win is 3pts
     //  - draw is 1pt
     //  - loss is 0pt
-    // Teams that finish level on points decide ranking based on goal difference
+    // Teams that finish level on points decide ranking based on goal difference.
+    // If goal difference equals as well, then greatest number of goals scored
+    // determines who finishes higher.
+    //
+    // For details, see: https://en.wikipedia.org/wiki/FIFA_World_Cup#Final_tournament
     func getRanking() -> [Team] {
         clearResults()
         processResults()

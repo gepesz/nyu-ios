@@ -172,12 +172,12 @@ CLASS #3
 - Add File => Objective-C file
     => File Type: Category
     => Class: NSString (whatever we want to extend)
-- core difference between Objective-C category & Swift extension is that category has a name
-    => @interface NSString (StringEmailManipulations)
+- core difference between Objective-C category & Swift extension is that category has a name:
+    @interface NSString (StringEmailManipulations)
 
     @end
 - and by default the file name is simply the class name we are extending + category name:
-    => NSString+StringEmailManipulations.h
+    NSString+StringEmailManipulations.h
 
     @interface NSString (StringEmailManipulations)
 

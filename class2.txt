@@ -157,3 +157,6 @@ CLASS #2
     => add breakpoint right after creating/modifying an object, then inspect it
 - rearrange files by drag & drop in the Navigator in any order you like them
 - use object.description to print (Stringify) objects nicely
+- no multiple inheritance in Swift
+    => it's like Java, single inheritance only
+- you can embed C functions like sleep() into Swift

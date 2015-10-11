@@ -1,0 +1,140 @@
+CLASS #4
+
+1. Topics
+- mixing Swift & Objective-C:
+    => adding Objective-C to Swift
+    => adding Swift to Objective-C
+- more Strings
+- more arrays
+- intro into app programming
+
+
+2. Adding Objective-C to Swift
+- example: class4/CustomObject
+- we want to say this:
+    func testObjectiveCFromSwift() {
+        let obj: CustomObject = CustomObject()
+        obj.colorOfObject = "Blue"
+        print(obj.colorOfObject)
+        obj.sayHello()
+    }
+- first time you add Objective-C to a Swift project you get the bridge header warning
+    => say yes to creating the bridging header
+    => class4-Briding-Header.h is now created
+    => use this class to import all Objective-C headers that you want to call from Swift:
+        //
+        //  Use this file to import your target's public headers that you would like to expose to Swift.
+        //
+
+        #import "CustomObject.h"    
+- now I can run the project and get:
+    Blue
+    2015-10-11 11:11:10.799 class4[28152:239967] Inside Objective-C sayHello()...
+- so you can easily add third party Objective-C libraries/code to your new Swift project
+    => just add the .m files to your Swift project
+    => add the import statements to your bridge header
+    => off you go: start calling third party Objective-C (eg: charts libs) from Swift
+
+
+3. Adding Swift to Objective-C
+- example: class4-objc/SwiftObject
+- again, the very first time XCode will ask you to add the bridging header files
+    => say yes
+- but .swift doesn't have header files.. so this is a bit different
+- ideally XCode 7 senses your newly added Swift file and understands what you want to do in Objective-C:
+    -(void) testSwiftFromObjectiveC {
+        SwiftObject* s = [[SwiftObject alloc] init];
+        NSString* greeting = [s greet:@"Kevin"];
+        NSLog(@"Color: %@", s.color);
+        NSLog(@"Greeting: %@", greeting);
+    }
+- if this doesn't work, import the XCode generated Swift .h file that we rely on into your Objective-C file:
+    #import "ProductModuleName-Swift.h"
+
+
+4. Strings
+- you can access Character-s of a String by simply using the array [index] operator:
+    func testString() {
+        let myCity = "New York"
+        let x1: Character = myCity[myCity.startIndex] // "N"
+        let x2: Character = myCity[myCity.startIndex.successor()] // "e"
+        let x3: Character = myCity[myCity.startIndex.advancedBy(4)] // "Y"
+    }
+    => there is also startIndex, successor(), predessor() & advancedBy(n: Int) available
+- what if you want to find all strings in a string array that starts with a certain word:
+    => use String.hasPrefix()
+        let sentences = ["Today is Cloudy", "Today is Sunday", "Today is a Holiday",
+                         "Tomorrow is Sunny", "Tomorrow is Monday", "Tomorrow is Columbus Day"]
+        for x in sentences {
+            if x.hasPrefix("Today") {
+                print(x)
+            }
+        }
+    => there is also String.hasSuffix() for strings ending in a certain way
+
+
+5. Arrays
+- pushing back elements:
+    func testArrays() {
+        var arr: [Int] = [1, 2, 3, 4]
+        arr.append(5)               // append() method        
+        arr += [6, 7, 8]            // concat another array
+        arr.insert(0, atIndex:0 )   // insert at a specific index
+        arr.removeAtIndex(0)        // remove from an index
+    }
+- checking for prime:
+    func isPrime(n: Int) -> Bool {
+        let maxVal: Int = Int(sqrt(Float(n)))
+        for i in 2...maxVal {       // better than the usual for loop, uses the new syntax
+            if ( n % i == 0 ) {
+                return false
+            }
+        }
+        return true
+    }
+
+
+6. Intro into App programming
+- use the storyboard to design your app:
+    => drag & drop widgets from the palette
+- you can use self.view to access the view that gets painted:
+    => change background color programatically:
+        self.view.backgroundColor = UIColor.blueColor()
+    => call a function repeatedly like setTimeout in JS:
+        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "myTimerFunction", userInfo: nil, repeats: true)
+- adding an outlet (eg: label) to code
+    => drag a label to your storyboard
+    => now we need a pointer in our code to this button
+    => so we need an IBOutlet from the ViewController to this button
+    => Ctrl + drag from storyboard widget to the ViewController where you want the IBOutlet to be created:
+        * for historical reasons, these are called IBOutlets 
+        * IB = Interface Builder
+- adding event handlers to widgets (eg: button tapped event handler):
+    => drag a button to your storyboard
+    => Ctrl + drag from storyboard widget to the ViewController where you want the IBOutlet to be created:
+        * change type from IBOutlet to IBAction
+    => your button tap event handler will be created:
+        @IBAction func button(sender: AnyObject) {
+            print("Button has been tapped")
+        }
+- you can add both an IBOutlet & IBAction to the same widget
+    => ex: slider
+    => use the Outlet (eg: self.fontSlider.value) inside the action to read the current widget value
+- to delete a connection (to delete an outlet/action):
+    => click on the last icon on the right palette pane (called Connections inspector)
+    => click on the x of the connection that you want to delete
+
+
+7. Tips
+- if you forget which outlet/action is which on the view:
+    => hover over the little o in the ViewController
+    => the widget that it controls will be highlighted on the storyboard
+- every widget is a view
+    => to they all have .frame.size.height & .frame.size.width properties
+    => to get the device height: same thing, just call it on self.view:
+        * let deviceHeight: CGFloat = self.view.frame.size.height
+- you can add simple animation to things via UIView animations:
+    UIView.beginAnimations(nil, context: nil)
+    UIView.setAnimationDuration(2.0)
+    self.labelRedSlab.frame = CGRectMake(0.0, (deviceHeight - height), width, height)
+    UIView.commitAnimations()
